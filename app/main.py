@@ -12,7 +12,7 @@ app = FastAPI()
 # Agrega el origen exacto de tu frontend
 origins = [
     "http://localhost:5173",  # Asegúrate de incluir este puerto
-    "https://backend-fastapi-gvnr.onrender.com"  # También puedes mantener este
+    "https://backend-fastapi-gvnr.onrender.com","https://frontend-svelte-2.onrender.com"  # También puedes mantener este
 ]
 
 app.add_middleware(
