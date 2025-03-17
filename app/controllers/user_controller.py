@@ -14,9 +14,9 @@ class UserController:
             with get_db_connection() as conn:
                 with conn.cursor() as cursor:
                     cursor.execute(
-                        """INSERT INTO usuario (nombre, apellido, documento, telefono, email ,password ,id_rol, id_producto, estado)
-                        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)""",
-                        (user.nombre, user.apellido ,user.documento, user.telefono,  user.email ,user.password, user.id_rol, user.producto ,user.estado)
+                        """INSERT INTO usuarios (nombre, email, telefono, direccion, tipo_usuario, contraseña, fecha_registro ,id_rol)
+                        VALUES (%s, %s, %s, %s, %s, %s, %s, %s)""",
+                        (user.nombre, user.email, user.telefono, user.direccion, user.tipo_usuario ,user.contraseña, user.fecha_registro, user.id_rol)
                     )
                     conn.commit()
             return {"mensaje": "Usuario creado exitosamente"}
@@ -27,20 +27,19 @@ class UserController:
         try:
             with get_db_connection() as conn:
                 with conn.cursor() as cursor:
-                    cursor.execute("SELECT * FROM usuario WHERE id = %s AND estado = 1", (user_id,))
+                    cursor.execute("SELECT * FROM usuarios WHERE id_usuario = %s AND estado = 1", (user_id,))
                     result = cursor.fetchone()
                     if result:
                         content = {
-                            'id': result[0],
+                            'id_usuario': result[0],
                             'nombre': result[1],
-                            'apellido': result[2],
-                            'documento': result[3],
-                            'telefono': result[4],
-                            'email': result[5],
-                            'password': result[6],
-                            'id_rol': result[7],
-                            'id_producto': result[8],
-                            'estado': result[9]
+                            'email': result[2],
+                            'telefono': result[3],
+                            'direccion': result[4],
+                            'tipo_usuario': result[5],
+                            'contraseña': result[6],
+                            'fecha_registro': result[7],
+                            'id_rol': result[8]
                         }
                         return jsonable_encoder(content)
                     else:
@@ -56,16 +55,15 @@ class UserController:
                     result = cursor.fetchall()
                     payload = [
                         {
-                            'id': result[0],
+                            'id_usuario': result[0],
                             'nombre': result[1],
-                            'apellido': result[2],
-                            'documento': result[3],
-                            'telefono': result[4],
-                            'email': result[5],
-                            'password': result[6],
-                            'id_rol': result[7],
-                            'id_producto': result[8],
-                            'estado': result[9]
+                            'email': result[2],
+                            'telefono': result[3],
+                            'direccion': result[4],
+                            'tipo_usuario': result[5],
+                            'contraseña': result[6],
+                            'fecha_registro': result[7],
+                            'id_rol': result[8]
                         }
                         for data in result
                     ]
@@ -86,13 +84,13 @@ class UserController:
                 with get_db_connection() as conn:
                     with conn.cursor() as cursor:
                         cursor.execute(
-                            "SELECT id, email, id_rol FROM usuario WHERE nombre = %s AND password = %s AND estado = 1",
+                            "SELECT id_usuario, email, id_rol FROM usuarios WHERE nombre = %s AND contraseña = %s AND estado = 1",
                             (user.usuario, user.contrasena)
                         )
                         result = cursor.fetchone()
                         if result:
                             content = {
-                                'id': result[0],
+                                'id_usuario': result[0],
                                 'email': result[1],
                                 'id_rol': result[2],
                             }
@@ -111,7 +109,7 @@ class UserController:
                 with conn.cursor() as cursor:
                     cursor.execute(
                         """
-                        UPDATE usuario SET estado=%s WHERE id=%s
+                        UPDATE usuarios SET estado=%s WHERE id_usuario=%s
                         """, (user_id))
                     conn.commit()
                     if cursor.rowcount == 0:
@@ -129,9 +127,9 @@ class UserController:
             with get_db_connection() as conn:
                 with conn.cursor() as cursor:
                     cursor.execute(
-                        """UPDATE usuario SET nombre = %s, apellido = %s, documento = %s,
-                            telefono = %s, email = %s ,password = %s, id_rol = %s, id_producto = %s, estado = %s WHERE id = %s AND estado = 1""",
-                        (user.nombre, user.apellido, user.documento, user.telefono, user.email ,user.password ,user.telefono, user.id_rol, user.id_producto, user.estado, user_id)
+                        """UPDATE usuarios SET nombre = %s, email = %s,
+                            telefono = %s, direccion = %s ,tipo_usuario = %s, contraseña = %s, fecha_registro = %s, id_rol = %s WHERE id_usuario = %s AND estado = 1""",
+                        (user.nombre, user.email, user.telefono, user.direccion, user.tipo_usuario ,user.contraseña, user.fecha_registro, user.id_rol)
                     )
                     conn.commit()
                     if cursor.rowcount == 0:

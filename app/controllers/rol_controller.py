@@ -12,7 +12,7 @@ class RolController:
             conn = get_db_connection()
             cursor = conn.cursor()
             cursor.execute(
-                "INSERT INTO rol (nombre, descripcion,estado) VALUES (%s, %s,%s)",
+                "INSERT INTO roles (nombre, descripcion,estado) VALUES (%s, %s,%s)",
                 (rol.nombre, rol.descripcion, rol.estado)
             )
             conn.commit()
