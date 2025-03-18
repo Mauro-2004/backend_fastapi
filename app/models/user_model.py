@@ -9,8 +9,10 @@ class User(BaseModel):
     tipo_usuario: str
     contraseña: str
     id_rol: int
+    estado: int
 
 class Login(BaseModel):
     email: str
     contraseña: str    
     id_rol: int
+    estado: bool

@@ -14,9 +14,9 @@ class UserController:
             with get_db_connection() as conn:
                 with conn.cursor() as cursor:
                     cursor.execute(
-                        """INSERT INTO usuarios (nombre, email, telefono, direccion, tipo_usuario, contraseña ,id_rol)
-                        VALUES (%s, %s, %s, %s, %s, %s, %s)""",
-                        (user.nombre, user.email, user.telefono, user.direccion, user.tipo_usuario ,user.contraseña, user.id_rol)
+                        """INSERT INTO usuarios (nombre, email, telefono, direccion, tipo_usuario, contraseña ,id_rol, estado)
+                        VALUES (%s, %s, %s, %s, %s, %s, %s, %s)""",
+                        (user.nombre, user.email, user.telefono, user.direccion, user.tipo_usuario ,user.contraseña, user.id_rol, user.estado)
                     )
                     conn.commit()
             return {"mensaje": "Usuario creado exitosamente"}
@@ -38,7 +38,8 @@ class UserController:
                             'direccion': result[4],
                             'tipo_usuario': result[5],
                             'contraseña': result[6],
-                            'id_rol': result[7]
+                            'id_rol': result[7],
+                            'estado': result[8]
                         }
                         return jsonable_encoder(content)
                     else:
@@ -61,7 +62,9 @@ class UserController:
                             'direccion': result[4],
                             'tipo_usuario': result[5],
                             'contraseña': result[6],
-                            'id_rol': result[7]
+                            'id_rol': result[7],
+                            'estado': result[8]
+
                         }
                         for data in result
                     ]
@@ -82,7 +85,7 @@ class UserController:
                 with get_db_connection() as conn:
                     with conn.cursor() as cursor:
                         cursor.execute(
-                            "SELECT id_usuario, email, id_rol FROM usuarios WHERE nombre = %s AND contraseña = %s AND estado = 1",
+                            "SELECT id_usuario, email, id_rol FROM usuarios WHERE email = %s AND contraseña = %s AND estado = 1",
                             (user.usuario, user.contrasena)
                         )
                         result = cursor.fetchone()
