@@ -86,7 +86,7 @@ class UserController:
                     with conn.cursor() as cursor:
                         cursor.execute(
                             "SELECT id_usuario, email, id_rol FROM usuarios WHERE email = %s AND contraseña = %s AND estado = 1",
-                            (user.usuario, user.contrasena)
+                            (user.email, user.contraseña)
                         )
                         result = cursor.fetchone()
                         if result:
