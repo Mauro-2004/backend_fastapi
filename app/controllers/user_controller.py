@@ -15,7 +15,7 @@ class UserController:
                 with conn.cursor() as cursor:
                     cursor.execute(
                         """INSERT INTO usuarios (nombre, email, telefono, direccion, tipo_usuario, contraseña ,id_rol)
-                        VALUES (%s, %s, %s, %s, %s, %s, %s, %s)""",
+                        VALUES (%s, %s, %s, %s, %s, %s, %s)""",
                         (user.nombre, user.email, user.telefono, user.direccion, user.tipo_usuario ,user.contraseña, user.id_rol)
                     )
                     conn.commit()
@@ -120,7 +120,7 @@ class UserController:
 
         
 
-    def update_user(self, user_id: int, user: User):
+    def update_user(self: int, user: User):
         try:
             with get_db_connection() as conn:
                 with conn.cursor() as cursor:
