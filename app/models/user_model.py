@@ -13,3 +13,4 @@ class User(BaseModel):
 class Login(BaseModel):
     email: str
     contraseña: str    
+    id_rol: int
