@@ -14,9 +14,9 @@ class UserController:
             with get_db_connection() as conn:
                 with conn.cursor() as cursor:
                     cursor.execute(
-                        """INSERT INTO usuarios (nombre, email, telefono, direccion, tipo_usuario, contraseña, fecha_registro ,id_rol)
+                        """INSERT INTO usuarios (nombre, email, telefono, direccion, tipo_usuario, contraseña ,id_rol)
                         VALUES (%s, %s, %s, %s, %s, %s, %s, %s)""",
-                        (user.nombre, user.email, user.telefono, user.direccion, user.tipo_usuario ,user.contraseña, user.fecha_registro, user.id_rol)
+                        (user.nombre, user.email, user.telefono, user.direccion, user.tipo_usuario ,user.contraseña, user.id_rol)
                     )
                     conn.commit()
             return {"mensaje": "Usuario creado exitosamente"}
@@ -38,8 +38,7 @@ class UserController:
                             'direccion': result[4],
                             'tipo_usuario': result[5],
                             'contraseña': result[6],
-                            'fecha_registro': result[7],
-                            'id_rol': result[8]
+                            'id_rol': result[7]
                         }
                         return jsonable_encoder(content)
                     else:
@@ -62,8 +61,7 @@ class UserController:
                             'direccion': result[4],
                             'tipo_usuario': result[5],
                             'contraseña': result[6],
-                            'fecha_registro': result[7],
-                            'id_rol': result[8]
+                            'id_rol': result[7]
                         }
                         for data in result
                     ]
@@ -128,8 +126,8 @@ class UserController:
                 with conn.cursor() as cursor:
                     cursor.execute(
                         """UPDATE usuarios SET nombre = %s, email = %s,
-                            telefono = %s, direccion = %s ,tipo_usuario = %s, contraseña = %s, fecha_registro = %s, id_rol = %s WHERE id_usuario = %s AND estado = 1""",
-                        (user.nombre, user.email, user.telefono, user.direccion, user.tipo_usuario ,user.contraseña, user.fecha_registro, user.id_rol)
+                            telefono = %s, direccion = %s ,tipo_usuario = %s, contraseña = %s, id_rol = %s WHERE id_usuario = %s AND estado = 1""",
+                        (user.nombre, user.email, user.telefono, user.direccion, user.tipo_usuario ,user.contraseña, user.id_rol)
                     )
                     conn.commit()
                     if cursor.rowcount == 0:

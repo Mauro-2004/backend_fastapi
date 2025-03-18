@@ -8,7 +8,6 @@ class User(BaseModel):
     direccion: str
     tipo_usuario: str
     contraseña: str
-    fecha_registro: str
     id_rol: int
 
 class Login(BaseModel):
