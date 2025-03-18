@@ -11,5 +11,5 @@ class User(BaseModel):
     id_rol: int
 
 class Login(BaseModel):
-    nombre: str
+    email: str
     contraseña: str    
