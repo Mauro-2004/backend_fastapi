@@ -120,7 +120,7 @@ class UserController:
 
         
 
-    def update_user(self: int, user: User):
+    def update_user(self, user: User):
         try:
             with get_db_connection() as conn:
                 with conn.cursor() as cursor:
